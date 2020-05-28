@@ -1,0 +1,32 @@
+{
+    // 请参阅 https://go.microsoft.com/fwlink/?LinkId=733558 
+    //查看有关 tasks.json 格式的文档
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "shell: g++ build active file",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",
+                "-Wall",
+                "${fileDirname}/*.cpp",
+                "/home/go/webserver/base/*.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-std=c++11",
+                "-pthread"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
