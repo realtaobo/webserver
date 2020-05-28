@@ -1,18 +1,19 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 13:01:02
- * @LastEditTime: 2020-05-26 13:01:14
+ * @LastEditTime: 2020-05-28 14:06:19
  */ 
 #include <iostream>
 #include <getopt.h>
 #include <string>
 
+using namespace std;
 
 int main(int argc, char* argv[])
 {
     int threadNum = 4;
     int port = 826;
-    std::string logPath = "./webserver.log";
+    string logPath = "./webserver.log";
     //处理参数
     int opt;
     const char *str = "t:l:p:";
@@ -26,7 +27,7 @@ int main(int argc, char* argv[])
             logPath = optarg;
             if(logPath.size()<2 || optarg[0]!='/' )
             {
-                std::cout<<"logPath should start with \\"<<'\n';
+                cout<<"logPath should start with /"<<'\n';
                 std::abort();
             }
         }else if(opt=='p')  //port setting
@@ -34,7 +35,7 @@ int main(int argc, char* argv[])
             port = std::atoi(optarg);
         }
     }
-    //std::cout<<threadNum<<" "<<port<<" "<<logPath<<"\n";
+    //cout<<threadNum<<" "<<port<<" "<<logPath<<"\n";
     
     return 0;
 }
