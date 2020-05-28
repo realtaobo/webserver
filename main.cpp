@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 13:01:02
- * @LastEditTime: 2020-05-28 15:13:52
+ * @LastEditTime: 2020-05-28 23:12:03
  */ 
 #include <iostream>
 #include <getopt.h>
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
             port = std::atoi(optarg);
         }
     }
-    //cout<<threadNum<<" "<<port<<" "<<logPath<<"\n";
+    cout<<threadNum<<" "<<port<<" "<<logPath<<"\n";
     Logger::setLogFileName(logPath);
     
     return 0;

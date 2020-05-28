@@ -10,8 +10,9 @@
             "args": [
                 "-g",
                 "-Wall",
-                "${fileDirname}/*.cpp",
-                "/home/go/webserver/base/*.cpp",
+                "~/webserver/*.cpp",
+                "~/webserver/base/*.cpp",
+                "~/webserver/Log/*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-std=c++11",

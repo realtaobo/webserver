@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-28 22:13:25
- * @LastEditTime: 2020-05-28 22:35:34
+ * @LastEditTime: 2020-05-28 23:02:06
  * @Description: 定义一个有意思的命名空间CurrentThread ，期间使用了一个GCC 变量__thread
  *  对于该类型变量创建线程时会使得每一个线程都有一份独立的实体，当然其只能修饰POD类型变量
  */ 
@@ -20,10 +20,10 @@ pid_t gettid()
 }
 
 namespace CurrentThread {
-extern  __thread int t_cachedTid = 0;
+extern  __thread int t_cachedTid;
 extern  __thread char t_tidString[32];
-extern  __thread int t_tidStringLength = 6;
-extern  __thread const char* t_threadName = "default";
+extern  __thread int t_tidStringLength;
+extern  __thread const char* t_threadName ;
 void cacheTid()
 {
     if(t_cachedTid == 0)
