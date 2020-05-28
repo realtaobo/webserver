@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-27 21:54:51
- * @LastEditTime: 2020-05-28 12:14:04
+ * @LastEditTime: 2020-05-28 16:19:13
  * @Description: 格式化输出，重载了<<运算符
  */ 
 #pragma once 
@@ -47,4 +47,3 @@ public:
     //void region_to_buffer();
     const string& data();
 };
-

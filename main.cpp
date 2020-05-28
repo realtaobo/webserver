@@ -1,11 +1,13 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 13:01:02
- * @LastEditTime: 2020-05-28 14:06:19
+ * @LastEditTime: 2020-05-28 15:13:52
  */ 
 #include <iostream>
 #include <getopt.h>
 #include <string>
+
+#include  "Log/Logger.h"
 
 using namespace std;
 
@@ -36,6 +38,7 @@ int main(int argc, char* argv[])
         }
     }
     //cout<<threadNum<<" "<<port<<" "<<logPath<<"\n";
+    Logger::setLogFileName(logPath);
     
     return 0;
 }

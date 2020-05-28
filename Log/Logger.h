@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-27 23:53:28
- * @LastEditTime: 2020-05-28 11:46:02
+ * @LastEditTime: 2020-05-28 15:50:12
  * @Description: 创建一个日志文件的对外接口，此处没有似单例模式一样创建一个单例类，而是类似
  * 调用pthread_once创建了一个全局唯一的静态对象，在C++11中可以使用 call_once替代pthread_once
  */ 
