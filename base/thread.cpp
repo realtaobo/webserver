@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 18:49:51
- * @LastEditTime: 2020-05-26 21:21:46
+ * @LastEditTime: 2020-05-28 22:56:24
  * @Description: file content
  */ 
 #include <thread>
@@ -13,16 +13,17 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/syscall.h>
 #include "noncopyable.h"
 #include "thread.h"
+#include "CurrentThread.h"
 
 using namespace std;
 
-pid_t gettid() 
-{ 
-    return static_cast<pid_t>(::syscall(SYS_gettid)); 
+namespace CurrentThread {
+__thread int t_cachedTid = 0;
+__thread char t_tidString[32];
+__thread int t_tidStringLength = 6;
+__thread const char* t_threadName = "default";
 }
 
 Thread::Thread(const ThreadFunc& func,const std::string& name)
@@ -40,7 +41,7 @@ void Thread::setDefaultName()
     rawtime = time(NULL);
     ptm = gmtime(&rawtime);
     char buf[24];
-    sprintf(buf,"thread%d%d_%d",ptm->tm_mon,ptm->tm_min,ptm->tm_sec);
+    sprintf(buf,"thread-%d",ptm->tm_mon);
     this->name_ = string(buf);
 }
 
@@ -57,21 +58,22 @@ std::string Thread::name() const
 }
 void start_thread(std::vector<pid_t>& tid,Thread& obj)
 {
-    pid_t tmp_id = gettid();
+    pid_t tmp_id = CurrentThread::tid();
     {
         std::unique_lock<std::mutex> lck(obj.t_mtx_);
         tid.push_back(tmp_id);
         obj.t_cov_.notify_all();
     }
+    CurrentThread::t_threadName = (obj.name_).empty() ? "Thread" :(obj.name_).c_str();
     obj.func_();//重写回调函数可以设置参数
 
 }
 void Thread::start()
 {
     vector<pid_t> tid;
-    std::thread Logthread(start_thread,std::ref(tid),std::ref(*this));
+    std::thread mythread(start_thread,std::ref(tid),std::ref(*this));
     started_ = true;
-    Logthread.detach();
+    mythread.detach();
     std::unique_lock<std::mutex> lck(this->t_mtx_);
     t_cov_.wait(lck,[&]{return !tid.empty();});
     if(tid.empty()){
