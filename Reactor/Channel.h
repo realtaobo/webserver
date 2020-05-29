@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-28 23:30:01
- * @LastEditTime: 2020-05-29 09:26:57
+ * @LastEditTime: 2020-05-29 19:56:17
  * @Description: reactor，one loop per thread的事件源定义
  */ 
 #pragma once
@@ -9,11 +9,11 @@
 #include <unistd.h>
 #include <functional>
 #include <memory>
+#include "EventLoop.h"
 
 
 using namespace std;
 
-class EventLoop;
 class HttpData; //HTTP data package
 
 class Channel
