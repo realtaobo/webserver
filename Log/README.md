@@ -1,13 +1,21 @@
 <!--
  * @Autor: taobo
  * @Date: 2020-05-28 15:14:39
- * @LastEditTime: 2020-05-28 16:32:31
+ * @LastEditTime: 2020-05-29 22:58:45
  * @Description: file content
 --> 
 # Log设计
 仿照了[muduo库](https://github.com/chenshuo/muduo)的设计,但发现实现过于复杂，使用了大量C风格的字符串，维护过于麻烦，重新基于`std::string`进行了简单的缓冲区设计  
 #### Log相关的类包括
-<font color=red>AppendFile (FileUtil.h)、LogFile (LogFile.h)、AsyncLogging (AsyncLogging.h)、FixedBuffer (LogBuffer.h)、LogStream (LogStream.h)、Logger (Logger.h)。</font>
+<font color=red>
+
+类|定义文件|类|定义文件
+--|--|--|---
+AppendFile |(FileUtil.h)|LogFile| (LogFile.h)
+AsyncLogging| (AsyncLogging.h)|FixedBuffer| (LogBuffer.h)
+LogStream |(LogStream.h)|Logger| (Logger.h)
+
+</font>
 #### Log类的简单实现
 ```cpp
 class AppendFile{
