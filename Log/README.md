@@ -1,7 +1,7 @@
 <!--
  * @Autor: taobo
  * @Date: 2020-05-28 15:14:39
- * @LastEditTime: 2020-05-29 22:58:45
+ * @LastEditTime: 2020-05-29 23:00:08
  * @Description: file content
 --> 
 # Log设计
@@ -16,6 +16,7 @@ AsyncLogging| (AsyncLogging.h)|FixedBuffer| (LogBuffer.h)
 LogStream |(LogStream.h)|Logger| (Logger.h)
 
 </font>
+
 #### Log类的简单实现
 ```cpp
 class AppendFile{
