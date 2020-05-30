@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-28 23:30:01
- * @LastEditTime: 2020-05-29 19:56:17
+ * @LastEditTime: 2020-05-30 18:10:15
  * @Description: reactor，one loop per thread的事件源定义
  */ 
 #pragma once
@@ -67,7 +67,7 @@ public:
 
     void setEvents(__uint32_t ev) ;
     
-    __uint32_t getEvents() ;
+    __uint32_t& getEvents() ;
 
     bool EqualAndUpdateLastEvents();
 

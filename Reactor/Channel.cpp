@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 09:03:26
- * @LastEditTime: 2020-05-29 09:28:25
+ * @LastEditTime: 2020-05-30 18:10:40
  */ 
 #include <sys/epoll.h>
 #include <unistd.h>
@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "Channel.h"
+#include "../Log/Logger.h"
 
 using namespace std;
 
@@ -58,6 +59,10 @@ void Channel::handleConn()
     connHandler_();
   }
 }
+void Channel::handleError(int fd, int err_num, std::string short_msg)
+{
+  LOG << fd <<short_msg ;
+}
     //EPOLLET： 将 EPOLL设为边缘触发(Edge Triggered)模式（默认为水平触发）
     //EPOLLONESHOT： 只监听一次事件，当监听完这次事件之后，如果还需要继续监听这个socket的话，需要再次把这个socket加入到EPOLL队列里
 
@@ -94,7 +99,7 @@ void Channel::setRevents(__uint32_t ev) { revents_ = ev; }
 
 void Channel::setEvents(__uint32_t ev) { events_ = ev; }
 
-__uint32_t Channel::getEvents() { return events_; }
+__uint32_t& Channel::getEvents() { return events_; }
 
 bool Channel::EqualAndUpdateLastEvents() {
     bool ret = (lastEvents_ == events_);
