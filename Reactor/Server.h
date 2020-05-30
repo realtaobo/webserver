@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 13:19:23
- * @LastEditTime: 2020-05-30 13:38:35
+ * @LastEditTime: 2020-05-30 14:43:32
  * @Description: tcp_server
  */ 
 #pragma once
@@ -28,5 +28,5 @@ public:
     ~Server() = default;
     void start();
     void handNewConn();
-    void handThisConn() { baseloop_->update_event(acceptchannel_);}
+    void handThisConn();
 };

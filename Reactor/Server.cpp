@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 13:32:34
- * @LastEditTime: 2020-05-30 14:21:57
+ * @LastEditTime: 2020-05-30 14:44:09
  */ 
 #include <memory>
 #include <arpa/inet.h>
@@ -43,6 +43,11 @@ void Server::start()
     started_ = true;
 }
 
+void Server::handThisConn() 
+{ 
+    baseloop_->update_event(acceptchannel_);
+}
+
 void Server::handNewConn() 
 {
     struct sockaddr_in client_addr;
@@ -73,9 +78,8 @@ void Server::handNewConn()
         }
         //关闭Nagle算法
         setSocketNodelay(accept_fd);
-        //shared_ptr<HttpData> req_info(new HttpData(baseloop_, accept_fd));
+        //shared_ptr<HttpData> req_info(new HttpData(loop, accept_fd));
         //req_info->getChannel()->setHolder(req_info);
         //loop->queueInLoop(std::bind(&HttpData::newEvent, req_info));
     }
-    acceptchannel_->setEvents(EPOLLIN | EPOLLET);
 }
