@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:53:14
- * @LastEditTime: 2020-05-30 18:20:08
+ * @LastEditTime: 2020-05-30 19:35:08
  */ 
 #include "Tcp_Connection.h"
 #include "Epoll.h"
@@ -27,6 +27,23 @@ error_(false)
     channel_->setWriteHandler(std::bind(&tcp_connection::handleWrite,this));
     channel_->setErrorHandler(std::bind(&tcp_connection::handleError,this));
     channel_->setConnHandler(std::bind(&tcp_connection::handleConn,this));
+}
+void tcp_connection::handleClose()
+{
+    conn_state_ = H_DISCONNECTED;
+    loop_->remove_event(channel_);
+}
+EventLoop* tcp_connection::getLoop()
+{
+    return loop_;
+}
+void tcp_connection::set_event(__uint32_t ev)
+{
+    channel_->setEvents(ev);
+}
+void tcp_connection::reg_event()
+{
+    loop_->add_event(channel_,2000);
 }
 void tcp_connection::handleError()
 {
