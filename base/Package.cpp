@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 20:08:38
- * @LastEditTime: 2020-05-29 21:33:38
+ * @LastEditTime: 2020-05-30 14:17:50
  */ 
 #include "Package.h"
 #include <stdio.h>
@@ -139,4 +139,63 @@ ssize_t writen(int fd, std::string &sbuff)
     else
         sbuff = sbuff.substr(writeSum);
     return writeSum;
+}
+
+int socket_bind_listen(int port)
+{
+    //socket()
+    if(port <0 || port >65535) return -1;
+    int listen_fd = 0;
+    if((listen_fd = socket(AF_INET,SOCK_STREAM,0)) == -1)
+        return -1;
+    //为socket设置reuseaddr属性，防止time_wait时地址复用情况
+    int optval =1;
+    if(setsockopt(listen_fd,SOL_SOCKET,SO_REUSEADDR,&optval,sizeof(optval)) < 0)
+    {
+        close(listen_fd);
+        return -1;
+    }
+    //bind()
+    struct sockaddr_in server_addr ;
+    bzero((void *)&server_addr,sizeof server_addr);
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    server_addr.sin_port = htons((uint16_t)port);
+    if(bind(listen_fd,(struct sockaddr*)&server_addr,sizeof(server_addr)) < 0)
+    {
+        close(listen_fd);
+        return -1;
+    }
+    //listen()
+    if(listen(listen_fd,2048) < 0)  //SYN queue : 2048
+    {
+        close(listen_fd);
+        return -1;
+    }
+    return listen_fd;
+}
+
+int setSocketNonBlocking(int fd)
+{
+    int flag = fcntl(fd,F_GETFL,0);
+    if(flag < 0) return -1;
+    flag |= O_NONBLOCK ;
+    if(fcntl(fd,F_SETFL,flag) < 0)
+        return -1;
+    return 0;
+}
+
+void handle_for_sigpipe() 
+{
+  struct sigaction sa;
+  memset(&sa, '\0', sizeof(sa));
+  sa.sa_handler = SIG_IGN;
+  sa.sa_flags = 0;
+  if (sigaction(SIGPIPE, &sa, NULL)) return;
+}
+
+void setSocketNodelay(int fd) 
+{
+  int enable = 1;
+  setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (void *)&enable, sizeof(enable));
 }
