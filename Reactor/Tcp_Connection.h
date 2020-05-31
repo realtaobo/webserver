@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:20:53
- * @LastEditTime: 2020-05-31 19:06:11
+ * @LastEditTime: 2020-05-31 19:17:20
  */ 
 #pragma once
 #include <string>
@@ -27,6 +27,11 @@ private:
     string outBuffer_;  //外部输出缓冲区
     ConnectionState conn_state_;
     bool error_;
+
+    //callback()
+    MyFunc parse_URI;
+    MyFunc parse_Headers;
+    MyFunc analysisRequest;
 public:
     tcp_connection(EventLoop* p, int fd);
     ~tcp_connection(){ close(cnfd_); }
@@ -41,8 +46,7 @@ public:
     void handleWrite();
     void handleError();
     void handleConn();
-    //callback()
-    MyFunc parse_URI;
-    MyFunc parse_Headers;
-    MyFunc analysisRequest;
+    void seturi(MyFunc&& func_){ parse_URI = func_;}
+    void setheader(MyFunc&& func_) { parse_Headers = func_; }
+    void setanaly(MyFunc&& func_) { analysisRequest = func_; }
 };

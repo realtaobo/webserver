@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 19:37:07
- * @LastEditTime: 2020-05-31 18:54:07
+ * @LastEditTime: 2020-05-31 19:17:28
  */ 
 #include <sys/epoll.h>
 #include <unistd.h>
@@ -25,7 +25,10 @@ readpos_(0),
 state_(STATE_PARSE_URI),
 hState_(H_START),
 keepalive_(false)
-{}
+{
+    tcp_server->parse_URI(std::bind(&HttpData::parse_URI,this));
+    tcp_server->
+}
 
 EventLoop* HttpData::getLoop()
 {
