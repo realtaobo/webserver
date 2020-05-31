@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 10:45:30
- * @LastEditTime: 2020-05-30 19:11:02
+ * @LastEditTime: 2020-05-30 19:41:22
  * @Description: file content
  */ 
 #pragma once
@@ -58,9 +58,9 @@ enum ParseState {
 class HttpData: public std::enable_shared_from_this<HttpData>
 {
 private:
-    tcp_connection  tcp_server;
+    shared_ptr<tcp_connection>  tcp_server;
     HttpMethod method_;//状态行
-    HttpVersion httpversio_;
+    HttpVersion httpversion_;
 
     string filename_;
     string path_;
