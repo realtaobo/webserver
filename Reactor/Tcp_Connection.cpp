@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:53:14
- * @LastEditTime: 2020-05-31 11:15:59
+ * @LastEditTime: 2020-05-31 21:37:38
  */ 
 #include "Tcp_Connection.h"
 #include "Epoll.h"
@@ -79,15 +79,24 @@ void tcp_connection::handleRead()
         inBuffer_.clear();
         return;
     }
-    if(read_sum < 0)
+    if(read_sum < 0 || zero)
     {
         perror("coonnect_fd read error");
         error_ = true;
         conn_state_ = H_DISCONNECTED;
         handleError();
-    }else if(zero)//此时表示连接出现了问题，可能是连接断开或者其他...
+        return;
+    }//else if(zero)//此时表示连接出现了问题，可能是连接断开或者其他...
+    // {
+    //     conn_state_ = H_DISCONNECTING;
+    // }
+    int res = callback_();
+    if(res == 0 && conn_state_ == H_CONNECTED)
     {
-        conn_state_ = H_DISCONNECTING;
+        if(outBuffer_.size() > 0){
+            handleWrite();
+        }
+        clearanderror();
     }
 }
 

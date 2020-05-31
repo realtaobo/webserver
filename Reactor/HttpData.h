@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 10:45:30
- * @LastEditTime: 2020-05-31 18:32:31
+ * @LastEditTime: 2020-05-31 20:06:15
  * @Description: file content
  */ 
 #pragma once
@@ -87,4 +87,5 @@ public:
     URIState parse_URI();
     HeaderState parse_Headers();
     AnalysisState analysisRequest();
+    int process();
 };

@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:20:53
- * @LastEditTime: 2020-05-31 19:17:20
+ * @LastEditTime: 2020-05-31 21:30:31
  */ 
 #pragma once
 #include <string>
@@ -15,8 +15,6 @@ using namespace std;
 
 enum ConnectionState { H_CONNECTED = 0, H_DISCONNECTING, H_DISCONNECTED };
 
-typedef function<int()> MyFunc;
-
 class tcp_connection
 {
 private:
@@ -29,9 +27,7 @@ private:
     bool error_;
 
     //callback()
-    MyFunc parse_URI;
-    MyFunc parse_Headers;
-    MyFunc analysisRequest;
+    function<int()> callback_;
 public:
     tcp_connection(EventLoop* p, int fd);
     ~tcp_connection(){ close(cnfd_); }
@@ -41,12 +37,11 @@ public:
     void reg_event();
     string& getinbuffer() { return inBuffer_; }
     void setoutbuffer(const string& str) { outBuffer_ = str; }
+    void clearanderror(){ error_=true; inBuffer_.clear();}
 public:
     void handleRead();
     void handleWrite();
     void handleError();
     void handleConn();
-    void seturi(MyFunc&& func_){ parse_URI = func_;}
-    void setheader(MyFunc&& func_) { parse_Headers = func_; }
-    void setanaly(MyFunc&& func_) { analysisRequest = func_; }
+    void setcall(function<void()>&& func_){ callback_ = func_;}
 };

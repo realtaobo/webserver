@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 19:37:07
- * @LastEditTime: 2020-05-31 19:19:10
+ * @LastEditTime: 2020-05-31 21:33:50
  */ 
 #include <sys/epoll.h>
 #include <unistd.h>
@@ -14,6 +14,7 @@
 #include "EventLoop.h"
 #include "Timer.h"
 #include "HttpData.h"
+#include "../Log/Logger.h"
 
 using namespace std;
 
@@ -26,9 +27,7 @@ state_(STATE_PARSE_URI),
 hState_(H_START),
 keepalive_(false)
 {
-    tcp_server->seturi(std::bind(&HttpData::parse_URI,this));
-    tcp_server->setheader(std::bind(&HttpData::parse_Headers,this));
-    tcp_server->setanaly(std::bind(&HttpData::analysisRequest,this));
+    tcp_server->setcall(std::bind(&HttpData::process,this));
 }
 
 EventLoop* HttpData::getLoop()
@@ -226,7 +225,7 @@ HeaderState HttpData::parse_Headers()
             }
         }//end switch
     }//end for
-    if(hState_ == H_END_CR){
+    if(hState_ == H_END_LF){
         str = str.substr(i);
         return PARSE_HEADER_SUCCESS;
     }
@@ -247,4 +246,66 @@ AnalysisState HttpData::analysisRequest()
         }
     }
     return ANALYSIS_ERROR;
+}
+
+int HttpData::process()
+{
+    if(state_ == STATE_PARSE_URI)
+    {
+        URIState flag = parse_URI();
+        if(flag == PARSE_URI_AGAIN)
+            return -1;
+        else if(flag == PARSE_URI_ERROR){
+            LOG <<"process uri error..." ;
+            tcp_server->clearanderror();
+            return -2;
+        }else{
+            state_ = STATE_PARSE_HEADERS;
+        }       
+    }
+    if(state_ == STATE_PARSE_HEADERS)
+    {
+        HeaderState flag = parse_Headers();
+        if(flag == PARSE_HEADER_AGAIN){
+            return -1;
+        }else if(flag == PARSE_HEADER_ERROR){
+            LOG<<"process header error..." ;
+            tcp_server->clearanderror();
+            return -2;
+        }
+        if(method_ == METHOD_POST){
+            state_ = STATE_RECV_BODY;
+        }else{
+            state_ = STATE_ANALYSIS;
+        }
+    }
+    string& buf = tcp_server->getinbuffer();
+    if(state_ == STATE_RECV_BODY){
+        int clen = -1;
+        if (state_ == STATE_RECV_BODY) {
+            int content_length = -1;
+            if (headers_.find("Content-length") != headers_.end()) {
+                content_length = stoi(headers_["Content-length"]);
+            } else {
+                // cout << "(state_ == STATE_RECV_BODY)" << endl;
+                tcp_server->clearanderror();
+                return -2;
+            }
+            if (static_cast<int>(buf.size()) < content_length) return -2;
+            state_ = STATE_ANALYSIS;
+        }
+    }
+    if (state_ == STATE_ANALYSIS) {
+        AnalysisState flag = analysisRequest();
+        if (flag == ANALYSIS_SUCCESS) {
+            state_ = STATE_FINISH;
+            reset();
+            return 0;
+        } else {
+            // cout << "state_ == STATE_ANALYSIS" << endl;
+            tcp_server->clearanderror();
+            return -2;
+        }
+    }
+    return -2;
 }
