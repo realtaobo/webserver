@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 10:45:30
- * @LastEditTime: 2020-05-30 19:41:22
+ * @LastEditTime: 2020-05-31 11:06:47
  * @Description: file content
  */ 
 #pragma once
@@ -73,6 +73,7 @@ private:
     map<string,string> headers_;
     weak_ptr<Timer> timer_;
 public:
+    //下面几个为普通成员构造函数
     HttpData(EventLoop* p, int fd);
     ~HttpData() = default;  //要关闭fd才可以
     void reset();
@@ -80,7 +81,6 @@ public:
     EventLoop *getLoop();
     void handleClose();
     void newEvent();
-
 public:
     //提供一个钩子，当添加当前连接的FD到epoll队列上时，由linkTimer()其初始化timer_
     void linkTimer(shared_ptr<Timer> m) { timer_ = m; }
