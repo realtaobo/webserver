@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-28 23:30:01
- * @LastEditTime: 2020-05-30 18:10:15
+ * @LastEditTime: 2020-05-31 11:19:48
  * @Description: reactor，one loop per thread的事件源定义
  */ 
 #pragma once
@@ -28,10 +28,6 @@ private:
     weak_ptr<HttpData> holder_;
 private:
     /*HTTP头处理函数    */
-    int parse_URI();
-    int parse_Headers();
-    int analysisRequest();
-
     typedef function<void()> CallBack;
     CallBack readHandler_;
     CallBack writeHandler_;

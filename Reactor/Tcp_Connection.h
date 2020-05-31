@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:20:53
- * @LastEditTime: 2020-05-30 19:35:33
+ * @LastEditTime: 2020-05-31 11:54:35
  */ 
 #pragma once
 #include <string>
@@ -36,4 +36,7 @@ public:
     void handleWrite();
     void handleError();
     void handleConn();
+    // int parse_URI();
+    // int parse_Headers();
+    // int analysisRequest();
 };

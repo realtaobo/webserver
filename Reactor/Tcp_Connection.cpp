@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:53:14
- * @LastEditTime: 2020-05-30 19:35:08
+ * @LastEditTime: 2020-05-31 11:15:59
  */ 
 #include "Tcp_Connection.h"
 #include "Epoll.h"
@@ -81,7 +81,7 @@ void tcp_connection::handleRead()
     }
     if(read_sum < 0)
     {
-        perror("coonnect_fd read error\n");
+        perror("coonnect_fd read error");
         error_ = true;
         conn_state_ = H_DISCONNECTED;
         handleError();
