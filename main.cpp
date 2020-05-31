@@ -1,13 +1,15 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 13:01:02
- * @LastEditTime: 2020-05-28 23:12:03
+ * @LastEditTime: 2020-05-31 22:58:56
  */ 
 #include <iostream>
 #include <getopt.h>
 #include <string>
 
 #include  "Log/Logger.h"
+#include  "Reactor/EventLoop.h"
+#include  "Reactor/Server.h"
 
 using namespace std;
 
@@ -40,5 +42,9 @@ int main(int argc, char* argv[])
     cout<<threadNum<<" "<<port<<" "<<logPath<<"\n";
     Logger::setLogFileName(logPath);
     
+    EventLoop mainloop;
+    Server myserver(&mainloop,threadNum,port);
+    myserver.start();
+    mainloop.loop();
     return 0;
 }
