@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:20:53
- * @LastEditTime: 2020-05-31 21:30:31
+ * @LastEditTime: 2020-05-31 21:41:18
  */ 
 #pragma once
 #include <string>
@@ -38,10 +38,11 @@ public:
     string& getinbuffer() { return inBuffer_; }
     void setoutbuffer(const string& str) { outBuffer_ = str; }
     void clearanderror(){ error_=true; inBuffer_.clear();}
+    shared_ptr <Channel> getChannel() { return channel_;}
 public:
     void handleRead();
     void handleWrite();
     void handleError();
     void handleConn();
-    void setcall(function<void()>&& func_){ callback_ = func_;}
+    void setcall(function<int()>&& func_){ callback_ = func_;}
 };

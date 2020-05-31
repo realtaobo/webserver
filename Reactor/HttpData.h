@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 10:45:30
- * @LastEditTime: 2020-05-31 20:06:15
+ * @LastEditTime: 2020-05-31 21:40:50
  * @Description: file content
  */ 
 #pragma once
@@ -81,6 +81,7 @@ public:
     EventLoop *getLoop();
     void handleClose();
     void newEvent();
+    shared_ptr <Channel> getChannel(){ return tcp_server->getChannel();}
 public:
     //提供一个钩子，当添加当前连接的FD到epoll队列上时，由linkTimer()其初始化timer_
     void linkTimer(shared_ptr<Timer> m) { timer_ = m; }

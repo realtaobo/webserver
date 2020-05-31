@@ -78,8 +78,8 @@ void Server::handNewConn()
         }
         //关闭Nagle算法
         setSocketNodelay(accept_fd);
-        //shared_ptr<HttpData> req_info(new HttpData(loop, accept_fd));
-        //req_info->getChannel()->setHolder(req_info);
-        //loop->queueInLoop(std::bind(&HttpData::newEvent, req_info));
+        shared_ptr<HttpData> req_info(new HttpData(loop, accept_fd));
+        req_info->getChannel()->setHolder(req_info);
+        loop->queueInLoop(std::bind(&HttpData::newEvent, req_info));
     }
 }

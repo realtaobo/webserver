@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 11:07:01
- * @LastEditTime: 2020-05-29 11:59:29
+ * @LastEditTime: 2020-05-31 21:52:54
  * @Description: 定时器
  */ 
 #include <queue>
@@ -10,6 +10,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 
+#include "HttpData.h"
 #include "Timer.h"
 
 using namespace std;
@@ -25,8 +26,8 @@ Timer::Timer(const Timer& t):sp_httpdata(t.sp_httpdata),expiredtime_(0){}
 
 Timer::~Timer()
 {
-    //if(sp_httpdata)
-        //sp_httpdata->handleClose();
+    if(sp_httpdata)
+        sp_httpdata->handleClose();
 }
 
 void Timer::update(int timeout)
@@ -61,7 +62,7 @@ void TimerQueue::push(shared_ptr<HttpData> sphttpdata,int timeout)
 {
     sptimer node(new Timer(sphttpdata,timeout));
     timerqueue.push(node);
-    //sphttpdata->linkTimer(new_node);
+    sphttpdata->linkTimer(node);
 }
 void TimerQueue::handleexpired()
 {
