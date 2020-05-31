@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 19:37:07
- * @LastEditTime: 2020-05-31 19:17:28
+ * @LastEditTime: 2020-05-31 19:19:10
  */ 
 #include <sys/epoll.h>
 #include <unistd.h>
@@ -26,8 +26,9 @@ state_(STATE_PARSE_URI),
 hState_(H_START),
 keepalive_(false)
 {
-    tcp_server->parse_URI(std::bind(&HttpData::parse_URI,this));
-    tcp_server->
+    tcp_server->seturi(std::bind(&HttpData::parse_URI,this));
+    tcp_server->setheader(std::bind(&HttpData::parse_Headers,this));
+    tcp_server->setanaly(std::bind(&HttpData::analysisRequest,this));
 }
 
 EventLoop* HttpData::getLoop()
