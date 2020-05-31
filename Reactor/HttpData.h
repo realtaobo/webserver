@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 10:45:30
- * @LastEditTime: 2020-05-31 21:40:50
+ * @LastEditTime: 2020-05-31 23:32:30
  * @Description: file content
  */ 
 #pragma once
@@ -12,10 +12,11 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
-#include "Tcp_Connection.h"
 #include "EventLoop.h"
+#include "Tcp_Connection.h"
 #include "Timer.h"
 
+class tcp_connection;
 using namespace std;
 
 enum HttpMethod { METHOD_POST = 1, METHOD_GET, METHOD_HEAD };
@@ -81,7 +82,7 @@ public:
     EventLoop *getLoop();
     void handleClose();
     void newEvent();
-    shared_ptr <Channel> getChannel(){ return tcp_server->getChannel();}
+    shared_ptr<Channel> getChannel();
 public:
     //提供一个钩子，当添加当前连接的FD到epoll队列上时，由linkTimer()其初始化timer_
     void linkTimer(shared_ptr<Timer> m) { timer_ = m; }

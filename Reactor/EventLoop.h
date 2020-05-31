@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 09:28:05
- * @LastEditTime: 2020-05-30 16:14:16
+ * @LastEditTime: 2020-05-31 23:26:21
  * @Description: reactor 事件循环发生器
  */ 
 #pragma once
@@ -12,10 +12,9 @@
 #include "Channel.h"
 #include "Epoll.h"
 
-extern __thread EventLoop* t_loopInThisThread;
 
 using namespace std;
-
+class Epoll;
 class EventLoop
 {
     typedef function<void()> Functor;

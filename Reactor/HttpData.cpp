@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 19:37:07
- * @LastEditTime: 2020-05-31 21:33:50
+ * @LastEditTime: 2020-05-31 23:33:00
  */ 
 #include <sys/epoll.h>
 #include <unistd.h>
@@ -44,6 +44,10 @@ void HttpData::newEvent()
 {
     tcp_server->set_event(EPOLLIN|EPOLLET|EPOLLONESHOT);
     tcp_server->reg_event();
+}
+shared_ptr<Channel> HttpData::getChannel()
+{
+     return tcp_server->getChannel();
 }
 
 void HttpData::seperateTimer() {
@@ -281,19 +285,16 @@ int HttpData::process()
     }
     string& buf = tcp_server->getinbuffer();
     if(state_ == STATE_RECV_BODY){
-        int clen = -1;
-        if (state_ == STATE_RECV_BODY) {
-            int content_length = -1;
-            if (headers_.find("Content-length") != headers_.end()) {
-                content_length = stoi(headers_["Content-length"]);
-            } else {
-                // cout << "(state_ == STATE_RECV_BODY)" << endl;
-                tcp_server->clearanderror();
-                return -2;
-            }
-            if (static_cast<int>(buf.size()) < content_length) return -2;
-            state_ = STATE_ANALYSIS;
+        int content_length = -1;
+        if (headers_.find("Content-length") != headers_.end()) {
+            content_length = stoi(headers_["Content-length"]);
+        } else {
+            // cout << "(state_ == STATE_RECV_BODY)" << endl;
+            tcp_server->clearanderror();
+            return -2;
         }
+        if (static_cast<int>(buf.size()) < content_length) return -2;
+        state_ = STATE_ANALYSIS;
     }
     if (state_ == STATE_ANALYSIS) {
         AnalysisState flag = analysisRequest();

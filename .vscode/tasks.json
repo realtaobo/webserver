@@ -13,6 +13,7 @@
                 "~/webserver/*.cpp",
                 "~/webserver/base/*.cpp",
                 "~/webserver/Log/*.cpp",
+                "~/webserver/Reactor/*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-std=c++11",

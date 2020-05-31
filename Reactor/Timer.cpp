@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 11:07:01
- * @LastEditTime: 2020-05-31 21:52:54
+ * @LastEditTime: 2020-05-31 23:16:57
  * @Description: 定时器
  */ 
 #include <queue>
@@ -22,7 +22,7 @@ Timer::Timer(shared_ptr<HttpData> request ,int timeout):deleted_(false),sp_httpd
     expiredtime_ = (((now.tv_sec % 10000) * 1000) + (now.tv_usec / 1000)) + timeout;
 }
 
-Timer::Timer(const Timer& t):sp_httpdata(t.sp_httpdata),expiredtime_(0){}
+Timer::Timer(const Timer& t):expiredtime_(0),sp_httpdata(t.sp_httpdata){}
 
 Timer::~Timer()
 {

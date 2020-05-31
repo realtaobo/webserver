@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 22:42:19
- * @LastEditTime: 2020-05-29 22:51:55
+ * @LastEditTime: 2020-05-31 23:27:42
  */ 
 #include <memory>
 #include <vector>
@@ -12,8 +12,9 @@
 using namespace std;
 
 ThreadPool::ThreadPool(EventLoop* base, int nums):baseloop_(base),
-numThreads_(nums), next_(0),
-started_(false){}
+started_(false),
+numThreads_(nums), 
+next_(0){}
 void ThreadPool::start()
 {
     started_ = true;

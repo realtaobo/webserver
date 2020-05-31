@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 13:01:02
- * @LastEditTime: 2020-05-31 22:58:56
+ * @LastEditTime: 2020-05-31 23:45:50
  */ 
 #include <iostream>
 #include <getopt.h>
@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
     
     EventLoop mainloop;
     Server myserver(&mainloop,threadNum,port);
+    cout<<__FILE__<<"  "<<__LINE__<<endl;
     myserver.start();
     mainloop.loop();
     return 0;

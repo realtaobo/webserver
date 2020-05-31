@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 09:03:26
- * @LastEditTime: 2020-05-30 18:10:40
+ * @LastEditTime: 2020-05-31 23:09:42
  */ 
 #include <sys/epoll.h>
 #include <unistd.h>
@@ -93,7 +93,6 @@ void Channel::handleEvents()
     }
         handleConn();
 }
-void Channel::handleError(int fd, int err_num, std::string short_msg){}
 
 void Channel::setRevents(__uint32_t ev) { revents_ = ev; }
 
