@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 10:45:30
- * @LastEditTime: 2020-05-31 11:06:47
+ * @LastEditTime: 2020-05-31 18:32:31
  * @Description: file content
  */ 
 #pragma once
@@ -59,12 +59,12 @@ class HttpData: public std::enable_shared_from_this<HttpData>
 {
 private:
     shared_ptr<tcp_connection>  tcp_server;
-    HttpMethod method_;//状态行
-    HttpVersion httpversion_;
+    HttpMethod method_;   //method
+    HttpVersion httpversion_; //version
 
-    string filename_;
+    string filename_;//uri
     string path_;
-    int readpos_;
+    int readpos_;//msg pos
     //消息处理相关标记
     ProcessState state_;
     ParseState hState_;
@@ -84,5 +84,7 @@ public:
 public:
     //提供一个钩子，当添加当前连接的FD到epoll队列上时，由linkTimer()其初始化timer_
     void linkTimer(shared_ptr<Timer> m) { timer_ = m; }
-    
+    URIState parse_URI();
+    HeaderState parse_Headers();
+    AnalysisState analysisRequest();
 };

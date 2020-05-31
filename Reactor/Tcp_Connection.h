@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:20:53
- * @LastEditTime: 2020-05-31 11:54:35
+ * @LastEditTime: 2020-05-31 12:02:17
  */ 
 #pragma once
 #include <string>
@@ -31,6 +31,8 @@ public:
     void handleClose();
     void set_event(__uint32_t ev);
     void reg_event();
+    string& getinbuffer() { return inBuffer_; }
+    void setoutbuffer(const string& str) { outBuffer_ = str; }
 public:
     void handleRead();
     void handleWrite();
