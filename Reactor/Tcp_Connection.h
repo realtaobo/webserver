@@ -1,11 +1,12 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:20:53
- * @LastEditTime: 2020-05-31 12:02:17
+ * @LastEditTime: 2020-05-31 19:06:11
  */ 
 #pragma once
 #include <string>
 #include <memory>
+#include <functional>
 #include "EventLoop.h"
 #include "Channel.h"
 
@@ -13,6 +14,8 @@
 using namespace std;
 
 enum ConnectionState { H_CONNECTED = 0, H_DISCONNECTING, H_DISCONNECTED };
+
+typedef function<int()> MyFunc;
 
 class tcp_connection
 {
@@ -38,7 +41,8 @@ public:
     void handleWrite();
     void handleError();
     void handleConn();
-    // int parse_URI();
-    // int parse_Headers();
-    // int analysisRequest();
+    //callback()
+    MyFunc parse_URI;
+    MyFunc parse_Headers;
+    MyFunc analysisRequest;
 };
