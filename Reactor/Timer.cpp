@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 11:07:01
- * @LastEditTime: 2020-05-31 23:16:57
+ * @LastEditTime: 2020-06-01 16:11:14
  * @Description: 定时器
  */ 
 #include <queue>
@@ -71,7 +71,7 @@ void TimerQueue::handleexpired()
         sptimer tmp = timerqueue.top();
         if(tmp->isdeleted())
             timerqueue.pop();
-        else if(tmp->isvalid())
+        else if(tmp->isvalid() == false)
             timerqueue.pop();
         else
             break;

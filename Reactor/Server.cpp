@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 13:32:34
- * @LastEditTime: 2020-06-01 11:27:45
+ * @LastEditTime: 2020-06-01 16:31:14
  */ 
 #include <memory>
 #include <arpa/inet.h>
@@ -26,7 +26,6 @@ threadnums_(nums),
 threadpool_(new ThreadPool(base,nums))
 {
     handle_for_sigpipe();
-    cout<<__FILE__<<"  "<<__LINE__<<listen_fd_<<endl;
     if(setSocketNonBlocking(listen_fd_) < 0)
     {
         perror("set non_sock error\n");
@@ -57,6 +56,7 @@ void Server::handNewConn()
     int accept_fd = 0;
     while((accept_fd = accept(listen_fd_, (struct sockaddr *)&client_addr,&client_addr_len)) > 0) 
     {
+        cout<<__FILE__<<"  "<<__LINE__<<accept_fd<<endl;
         EventLoop *loop = threadpool_->getNextLoop();
         LOG << "New connection from " << inet_ntoa(client_addr.sin_addr) << ":"
             << ntohs(client_addr.sin_port);

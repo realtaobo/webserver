@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 20:08:38
- * @LastEditTime: 2020-06-01 00:17:34
+ * @LastEditTime: 2020-06-01 16:14:24
  */ 
 #include "Package.h"
 #include <stdio.h>
@@ -155,7 +155,7 @@ int socket_bind_listen(int port)
         close(listen_fd);
         return -1;
     }
-    cout<<__FILE__<<"  "<<__LINE__<<"  "<<listen_fd<<" "<<port<<endl;
+    //cout<<__FILE__<<"  "<<__LINE__<<"  "<<listen_fd<<" "<<port<<endl;
     //bind()
     struct sockaddr_in server_addr ;
     bzero(&server_addr,sizeof(server_addr));
@@ -167,14 +167,14 @@ int socket_bind_listen(int port)
         close(listen_fd);
         return -1;
     }
-    cout<<__FILE__<<"  "<<__LINE__<<"  "<<listen_fd<<" "<<port<<endl;
+    //cout<<__FILE__<<"  "<<__LINE__<<"  "<<listen_fd<<" "<<port<<endl;
     //listen()
     if(listen(listen_fd,2048) < 0)  //SYN queue : 2048
     {
         close(listen_fd);
         return -1;
     }
-        cout<<__FILE__<<"  "<<__LINE__<<"  "<<listen_fd<<" "<<port<<endl;
+        //cout<<__FILE__<<"  "<<__LINE__<<"  "<<listen_fd<<" "<<port<<endl;
     return listen_fd;
 }
 
