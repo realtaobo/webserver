@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 13:01:02
- * @LastEditTime: 2020-05-31 23:45:50
+ * @LastEditTime: 2020-05-31 23:59:07
  */ 
 #include <iostream>
 #include <getopt.h>
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     Logger::setLogFileName(logPath);
     
     EventLoop mainloop;
-    Server myserver(&mainloop,threadNum,port);
+    Server myserver(&mainloop,port,threadNum);
     cout<<__FILE__<<"  "<<__LINE__<<endl;
     myserver.start();
     mainloop.loop();

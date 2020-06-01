@@ -1,12 +1,12 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 21:58:25
- * @LastEditTime: 2020-05-27 21:42:55
+ * @LastEditTime: 2020-06-01 10:53:01
  * @Description: 该类负责维护日志线程的搭建与维护，AsyncLogging::threadFunc()函数是日志缓冲区的核心设计
  */ 
+#include "../base/CountDownLatch.h"
 #include "AsyncLogging.h"
 #include "LogFile.h"
-
 #include <iostream>
 #include <functional>
 #include <vector>

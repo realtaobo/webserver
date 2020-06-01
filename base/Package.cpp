@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 20:08:38
- * @LastEditTime: 2020-05-30 14:17:50
+ * @LastEditTime: 2020-06-01 00:17:34
  */ 
 #include "Package.h"
 #include <stdio.h>
@@ -16,7 +16,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
-
+#include <iostream>
 using namespace std;
 
 const int BUFFSIZE = 4096;
@@ -146,7 +146,7 @@ int socket_bind_listen(int port)
     //socket()
     if(port <0 || port >65535) return -1;
     int listen_fd = 0;
-    if((listen_fd = socket(AF_INET,SOCK_STREAM,0)) == -1)
+    if((listen_fd = socket(AF_INET,SOCK_STREAM,0)) < 0)
         return -1;
     //为socket设置reuseaddr属性，防止time_wait时地址复用情况
     int optval =1;
@@ -155,31 +155,36 @@ int socket_bind_listen(int port)
         close(listen_fd);
         return -1;
     }
+    cout<<__FILE__<<"  "<<__LINE__<<"  "<<listen_fd<<" "<<port<<endl;
     //bind()
     struct sockaddr_in server_addr ;
-    bzero((void *)&server_addr,sizeof server_addr);
+    bzero(&server_addr,sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    server_addr.sin_port = htons((uint16_t)port);
+    server_addr.sin_port = htons(port);
     if(bind(listen_fd,(struct sockaddr*)&server_addr,sizeof(server_addr)) < 0)
     {
         close(listen_fd);
         return -1;
     }
+    cout<<__FILE__<<"  "<<__LINE__<<"  "<<listen_fd<<" "<<port<<endl;
     //listen()
     if(listen(listen_fd,2048) < 0)  //SYN queue : 2048
     {
         close(listen_fd);
         return -1;
     }
+        cout<<__FILE__<<"  "<<__LINE__<<"  "<<listen_fd<<" "<<port<<endl;
     return listen_fd;
 }
 
 int setSocketNonBlocking(int fd)
 {
     int flag = fcntl(fd,F_GETFL,0);
+    //cout<<flag<<__FILE__<<"  "<<__LINE__<<endl;
     if(flag < 0) return -1;
     flag |= O_NONBLOCK ;
+    //cout<<__FILE__<<"  "<<__LINE__<<endl;
     if(fcntl(fd,F_SETFL,flag) < 0)
         return -1;
     return 0;

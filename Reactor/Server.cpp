@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 13:32:34
- * @LastEditTime: 2020-05-30 14:44:09
+ * @LastEditTime: 2020-06-01 11:27:45
  */ 
 #include <memory>
 #include <arpa/inet.h>
@@ -26,6 +26,7 @@ threadnums_(nums),
 threadpool_(new ThreadPool(base,nums))
 {
     handle_for_sigpipe();
+    cout<<__FILE__<<"  "<<__LINE__<<listen_fd_<<endl;
     if(setSocketNonBlocking(listen_fd_) < 0)
     {
         perror("set non_sock error\n");

@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:53:14
- * @LastEditTime: 2020-05-31 22:55:22
+ * @LastEditTime: 2020-06-01 15:18:09
  */ 
 #include "Tcp_Connection.h"
 #include "Epoll.h"
@@ -137,10 +137,11 @@ void tcp_connection::handleRead(){
         return;
     }
     for(char& c:inBuffer_){
-        outBuffer_.push_back(c);
+        outBuffer_.push_back(c+1);
     }
     inBuffer_.clear();
-    reg_event();
+    //reg_event();
+    handleWrite();
 }
 void tcp_connection::handleConn(){}
 void tcp_connection::handleWrite(){

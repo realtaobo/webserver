@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 19:37:07
- * @LastEditTime: 2020-05-31 23:33:00
+ * @LastEditTime: 2020-06-01 14:16:42
  */ 
 #include <sys/epoll.h>
 #include <unistd.h>
@@ -42,7 +42,8 @@ void HttpData::handleClose()
 
 void HttpData::newEvent()
 {
-    tcp_server->set_event(EPOLLIN|EPOLLET|EPOLLONESHOT);
+    //tcp_server->set_event(EPOLLIN|EPOLLET|EPOLLONESHOT);
+    tcp_server->set_event(EPOLLIN|EPOLLET);
     tcp_server->reg_event();
 }
 shared_ptr<Channel> HttpData::getChannel()

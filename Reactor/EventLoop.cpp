@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 19:26:29
- * @LastEditTime: 2020-05-30 16:18:06
+ * @LastEditTime: 2020-06-01 15:10:34
  */ 
 #include <functional>
 #include <memory>
@@ -100,7 +100,7 @@ void EventLoop::loop()
         ret = poller_->poll();
         for(auto& it: ret) it->handleEvents();
         doPendingFunctors();
-        poller_->handleexpired();
+        //poller_->handleexpired();
     }
     looping_ = false;
 }
