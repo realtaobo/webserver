@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-27 20:57:51
- * @LastEditTime: 2020-05-28 12:57:51
+ * @LastEditTime: 2020-06-01 19:40:19
  * @Description: 日志类单元测试文件
  */ 
 #include <iostream>
@@ -9,8 +9,8 @@
 #include <chrono>
 #include <string>
 #include "../base/thread.h"
-#include "AsyncLogging.h"
-#include "Logger.h"
+#include "../Log/AsyncLogging.h"
+#include "../Log/Logger.h"
 
 
 using namespace std;

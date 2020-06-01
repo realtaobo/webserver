@@ -1,15 +1,15 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 20:41:40
- * @LastEditTime: 2020-05-27 21:11:49
- * @Description: file content
+ * @LastEditTime: 2020-06-01 19:40:41
+ * @Description: thread类
  */ 
 
 #include <iostream>
 #include <thread>
 #include <chrono>
 
-#include "thread.h"
+#include "../base/thread.h"
 #include "../Log/AsyncLogging.h"
 
 using namespace std;
