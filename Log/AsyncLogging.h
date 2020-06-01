@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 14:53:52
- * @LastEditTime: 2020-05-27 21:06:35
+ * @LastEditTime: 2020-06-01 18:00:40
  * @Description: 负责启动一个log线程，专门用来将log写入LogFile，应用了“双缓冲技术”
  *              也即日志的前后端分离技术
  */ 
@@ -20,7 +20,7 @@ using namespace std;
 class AsyncLogging: noncopyable
 {
 private:
-    typedef FixedBuffer<b_BufferSize> Buffer;
+    typedef FixedBuffer<s_BufferSize> Buffer;
     typedef shared_ptr<Buffer> BufferPtr;
     typedef vector<BufferPtr> BufferVector;
     //私有变量

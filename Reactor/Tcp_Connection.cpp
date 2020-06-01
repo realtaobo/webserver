@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:53:14
- * @LastEditTime: 2020-06-01 16:13:07
+ * @LastEditTime: 2020-06-01 19:13:41
  */ 
 #include "Tcp_Connection.h"
 #include "Epoll.h"
@@ -13,6 +13,9 @@
 #include <string>
 #include <cstring>
 #include <functional>
+
+const int DEFAULT_EXPIRED_TIME = 2000;              // ms
+const int DEFAULT_KEEP_ALIVE_TIME = 5 * 60 * 1000;  // ms
 
 using namespace std;
 
@@ -120,6 +123,7 @@ void tcp_connection::reg_event()
 // }
 
 void tcp_connection::handleRead(){
+    cout<<"out..."<<endl;
     bool zero = false;
     int read_sum = readn(cnfd_,inBuffer_,zero);
     if(read_sum < 0 || zero)
@@ -143,10 +147,27 @@ void tcp_connection::handleRead(){
     //reg_event();
     handleWrite();
 }
-void tcp_connection::handleConn(){}
+void tcp_connection::handleConn()
+{
+    seperate_();
+    
+    
+    //__uint32_t &events = channel_->getEvents();
+    if(!error_ && conn_state_ == H_CONNECTED)//一切正常的话
+    {
+        cout << "延时。。。"<<endl;
+        cout<<__FILE__<<" "<<__LINE__<<endl;
+        set_event(EPOLLET|EPOLLIN);
+        loop_->update_event(channel_,2000);
+    }else{
+        cout<<__FILE__<<" "<<__LINE__<<endl;
+        conn_state_ = H_DISCONNECTED;
+    }
+}
 void tcp_connection::handleWrite(){
     writen(cnfd_,outBuffer_);
     outBuffer_.clear();
+    //
 }
 void tcp_connection::handleError()
 {

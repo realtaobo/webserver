@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 09:03:26
- * @LastEditTime: 2020-05-31 23:09:42
+ * @LastEditTime: 2020-06-01 17:46:14
  */ 
 #include <sys/epoll.h>
 #include <unistd.h>
@@ -91,7 +91,7 @@ void Channel::handleEvents()
     if (revents_ & EPOLLOUT) {
         handleWrite();
     }
-        handleConn();
+    handleConn();
 }
 
 void Channel::setRevents(__uint32_t ev) { revents_ = ev; }

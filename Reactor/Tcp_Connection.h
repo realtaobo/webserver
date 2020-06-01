@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:20:53
- * @LastEditTime: 2020-05-31 21:41:18
+ * @LastEditTime: 2020-06-01 18:30:41
  */ 
 #pragma once
 #include <string>
@@ -28,6 +28,7 @@ private:
 
     //callback()
     function<int()> callback_;
+    function<void()> seperate_;
 public:
     tcp_connection(EventLoop* p, int fd);
     ~tcp_connection(){ close(cnfd_); }
@@ -45,4 +46,5 @@ public:
     void handleError();
     void handleConn();
     void setcall(function<int()>&& func_){ callback_ = func_;}
+    void setseper(function<void()>&& func) { seperate_ = func;}
 };

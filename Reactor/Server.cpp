@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 13:32:34
- * @LastEditTime: 2020-06-01 16:31:14
+ * @LastEditTime: 2020-06-01 17:47:06
  */ 
 #include <memory>
 #include <arpa/inet.h>
@@ -45,18 +45,19 @@ void Server::start()
 
 void Server::handThisConn() 
 { 
-    baseloop_->update_event(acceptchannel_);
+    //baseloop_->update_event(acceptchannel_);
 }
 
 void Server::handNewConn() 
 {
+    //cout<<__FILE__<<"  "<<__LINE__<<endl;
     struct sockaddr_in client_addr;
     memset(&client_addr, 0, sizeof(struct sockaddr_in));
     socklen_t client_addr_len = sizeof(client_addr);
     int accept_fd = 0;
     while((accept_fd = accept(listen_fd_, (struct sockaddr *)&client_addr,&client_addr_len)) > 0) 
     {
-        cout<<__FILE__<<"  "<<__LINE__<<accept_fd<<endl;
+        
         EventLoop *loop = threadpool_->getNextLoop();
         LOG << "New connection from " << inet_ntoa(client_addr.sin_addr) << ":"
             << ntohs(client_addr.sin_port);

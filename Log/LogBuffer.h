@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 15:08:00
- * @LastEditTime: 2020-05-27 21:54:33
+ * @LastEditTime: 2020-06-01 18:00:04
  * @Description: log缓冲区设计与实现
  */ 
 #pragma once
@@ -15,8 +15,8 @@
 using namespace std;
 
 const int stream_Size = 1;
-const int s_BufferSize = 40;
-const int b_BufferSize = 40*10;
+const int s_BufferSize = 4;
+const int b_BufferSize = 4*10;
 
 template<int Size>
 class FixedBuffer : noncopyable

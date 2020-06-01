@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 10:48:18
- * @LastEditTime: 2020-05-29 21:05:26
+ * @LastEditTime: 2020-06-01 17:29:39
  * @Description: file content
  */ 
 #include "Epoll.h"
@@ -96,6 +96,7 @@ vector<shared_ptr<Channel>> Epoll::geteventsreq(int event_num)
 }
 vector<shared_ptr<Channel>> Epoll::poll()
 {
+    //events_.clear();
     int event_cnt = 
             epoll_wait(epollfd_,&(*events_.begin()),events_.size(),EPOLLWAIT_TIME);
     vector<shared_ptr<Channel>> req_data= geteventsreq(event_cnt);
