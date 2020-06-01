@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-30 16:20:53
- * @LastEditTime: 2020-06-01 18:30:41
+ * @LastEditTime: 2020-06-01 20:01:57
  */ 
 #pragma once
 #include <string>
@@ -38,7 +38,7 @@ public:
     void reg_event();
     string& getinbuffer() { return inBuffer_; }
     void setoutbuffer(const string& str) { outBuffer_ = str; }
-    void clearanderror(){ error_=true; inBuffer_.clear();}
+    void clearanderror(){ error_=true; inBuffer_.clear(); outBuffer_.clear(); }
     shared_ptr <Channel> getChannel() { return channel_;}
 public:
     void handleRead();
