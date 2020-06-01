@@ -1,7 +1,7 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-26 13:01:02
- * @LastEditTime: 2020-06-01 19:36:29
+ * @LastEditTime: 2020-06-01 20:11:54
  */ 
 #include <iostream>
 #include <getopt.h>
@@ -13,7 +13,7 @@
 
 using namespace std;
 
-int main_app(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     int threadNum = 4;
     int port = 826;
