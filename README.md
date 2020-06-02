@@ -1,13 +1,14 @@
 <!--
  * @Autor: taobo
  * @Date: 2020-06-01 23:18:18
- * @LastEditTime: 2020-06-01 23:59:01
+ * @LastEditTime: 2020-06-02 09:21:21
  * @Description: file content
 --> 
 # webserver
 
 #### 介绍
-使用C++11 编写的静态服务器，简单解析了get、head请求，丢弃了post请求， 在阅读《Linux多线程服务端编程》之后，参考了[muduo](https://github.com/chenshuo/muduo) 与 linya的[WebServer](https://github.com/linyacool/WebServer)日志实现方式，实现了自己的异步日志模块，生成日志格式请点击[Log](https://gitee.com/windyGOlife/webserver/blob/master/webserver.log)  
+使用C++11 编写的静态服务器，简单解析了get、head请求，丢弃了post请求， 在阅读《Linux多线程服务端编程》之后，参考了[muduo](https://github.com/chenshuo/muduo) 与 linya的[WebServer](https://github.com/linyacool/WebServer)日志实现方式，实现了自己的异步日志模块，生成日志格式请点击[Log](https://gitee.com/windyGOlife/webserver/blob/master/webserver.log)    
+
 [测试截图](https://gitee.com/windyGOlife/webserver/blob/master/example/test_page.png)  
 **软件架构**
 | Part Ⅰ | Part Ⅱ | Part Ⅲ | Part Ⅳ | Part Ⅴ | 
@@ -30,7 +31,6 @@ make
 
 **使用说明**
 
-
 1.  考虑服务器的安全性问题与资源开销，使用多线程以充分利用多核CPU，并使用线程池避免线程频繁创建销毁的开销
 2.  基于one loop per thread 模式为网络框架的核心
 3.  使用基于`std::priority_queue`的定时器来管理tcp连接，以及时处理超时请求
@@ -38,3 +38,6 @@ make
 5.  采取轮询的方式将IO请求分发给某一个IO线程
 6.  对资源的管理，大多使用RAII等机制
 7.  相比前面的版本(基于C) ，本次使用eventfd 取代socketpair唤醒线程，使用更加简便
+
+**代码统计**  
+![cloc](https://gitee.com/windyGOlife/webserver/blob/master/example/code.png)
