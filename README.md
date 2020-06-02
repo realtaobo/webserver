@@ -1,7 +1,7 @@
 <!--
  * @Autor: taobo
  * @Date: 2020-06-01 23:18:18
- * @LastEditTime: 2020-06-02 09:21:21
+ * @LastEditTime: 2020-06-02 09:26:44
  * @Description: file content
 --> 
 # webserver
@@ -40,4 +40,4 @@ make
 7.  相比前面的版本(基于C) ，本次使用eventfd 取代socketpair唤醒线程，使用更加简便
 
 **代码统计**  
-![cloc](https://gitee.com/windyGOlife/webserver/blob/master/example/code.png)
+![cloc](https://gitee.com/windyGOlife/webserver/raw/master/example/code.png)
