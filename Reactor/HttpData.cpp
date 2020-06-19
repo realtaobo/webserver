@@ -329,6 +329,9 @@ AnalysisState HttpData::analysisRequest()
             body_buff += "<html><title>Notes</title>";
             body_buff += "<h1>我的博客</h1>";
             body_buff += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">";
+
+            body_buff += "<dt><a href=\"https://gitee.com/windyGOlife/webserver/\">本项目仓库——码云</a></dt>";
+            body_buff += "<dt><a href=\"https://gitee.com/windyGOlife/cmianshi/\">其他个人 笔记</a></dt>";
             body_buff += "<dt><a href=\"http://www.linya.pub/\">C++ 笔记</a></dt>";
             body_buff += "<dt><a href=\"https://blog.csdn.net/qq_41345173/article/details/105491017\">三次握手中的性能优化与安全问题</a></dt>";
             //...... 若有兴趣，可以据此继续添加
