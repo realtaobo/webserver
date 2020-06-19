@@ -6,6 +6,9 @@
 --> 
 # webserver
 
+项目测试页面：[http://118.190.147.148/notes](http://118.190.147.148/notes)
+
+
 #### 介绍
 使用C++11 编写的静态服务器，简单解析了get、head请求，丢弃了post请求， 在阅读《Linux多线程服务端编程》之后，参考了[muduo](https://github.com/chenshuo/muduo) 与 linya的[WebServer](https://github.com/linyacool/WebServer)日志实现方式，实现了自己的异步日志模块，生成日志格式请点击[Log](https://gitee.com/windyGOlife/webserver/blob/master/webserver.log)    
 
