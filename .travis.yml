@@ -1,0 +1,20 @@
+language: cpp
+sudo: required
+dist: bionic
+compiler:
+  - g++
+os:
+  - linux
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y yasm
+  - sudo apt-get install -y libsdl2-dev
+  - sudo apt-get install make
+
+script:
+  - make
+  - sudo ./main
+
+notifications:
+  email: false
