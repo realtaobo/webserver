@@ -1,17 +1,19 @@
 /*
  * @Autor: taobo
  * @Date: 2020-05-29 10:45:30
- * @LastEditTime: 2020-05-31 23:32:30
+ * @LastEditTime: 2020-12-22 13:23:20
  * @Description: file content
- */ 
+ */
 #pragma once
 #include <sys/epoll.h>
 #include <unistd.h>
+
 #include <functional>
 #include <map>
 #include <memory>
 #include <string>
 #include <unordered_map>
+
 #include "EventLoop.h"
 #include "Tcp_Connection.h"
 #include "Timer.h"
@@ -56,38 +58,39 @@ enum ParseState {
   H_END_LF
 };
 
-class HttpData: public std::enable_shared_from_this<HttpData>
-{
-private:
-    shared_ptr<tcp_connection>  tcp_server;
-    HttpMethod method_;   //method
-    HttpVersion httpversion_; //version
+class HttpData : public std::enable_shared_from_this<HttpData> {
+ private:
+  shared_ptr<tcp_connection> tcp_server;
+  HttpMethod method_;        // method
+  HttpVersion httpversion_;  // version
 
-    string filename_;//uri
-    string path_;
-    int readpos_;//msg pos
-    //消息处理相关标记
-    ProcessState state_;
-    ParseState hState_;
+  string filename_;  // uri
+  string path_;
+  int readpos_;  // msg pos
+  //消息处理相关标记
+  ProcessState state_;
+  ParseState hState_;
 
-    bool keepalive_;
-    map<string,string> headers_;
-    weak_ptr<Timer> timer_;
-public:
-    //下面几个为普通成员构造函数
-    HttpData(EventLoop* p, int fd);
-    ~HttpData() = default;  //要关闭fd才可以
-    void reset();
-    void seperateTimer();
-    EventLoop *getLoop();
-    void handleClose();
-    void newEvent();
-    shared_ptr<Channel> getChannel();
-public:
-    //提供一个钩子，当添加当前连接的FD到epoll队列上时，由linkTimer()其初始化timer_
-    void linkTimer(shared_ptr<Timer> m) { timer_ = m; }
-    URIState parse_URI();
-    HeaderState parse_Headers();
-    AnalysisState analysisRequest();
-    int process();
+  bool keepalive_;
+  map<string, string> headers_;
+  weak_ptr<Timer> timer_;
+
+ public:
+  //下面几个为普通成员构造函数
+  HttpData(EventLoop* p, int fd);
+  ~HttpData() = default;  //要关闭fd才可以
+  void reset();
+  void seperateTimer();
+  EventLoop* getLoop();
+  void handleClose();
+  void newEvent();
+  shared_ptr<Channel> getChannel();
+
+ public:
+  //提供一个钩子，当添加当前连接的FD到epoll队列上时，由linkTimer()其初始化timer_
+  void linkTimer(shared_ptr<Timer> m) { timer_ = m; }
+  URIState parse_URI();
+  HeaderState parse_Headers();
+  AnalysisState analysisRequest();
+  int process();
 };

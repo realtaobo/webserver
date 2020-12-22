@@ -3,20 +3,21 @@
  * @Date: 2020-05-29 20:04:37
  * @LastEditTime: 2020-05-30 14:17:23
  * @Description: 非阻塞IO必备的一些包裹函数，与基于C/S架构的部分函数的包裹函数
- */ 
+ */
 #pragma once
 #include <stdlib.h>
+
 #include <string>
 
 void shutDownWR(int fd);
 
- /*连接建立，若某一端关闭连接，而另一端仍然向它写数据，
+/*连接建立，若某一端关闭连接，而另一端仍然向它写数据，
  *第一次写数据后会收到RST响应，此后再写数据，内核将向进程发出SIGPIPE信号，通知进程此连接已经断开。
  *而SIGPIPE信号的默认处理是终止程序，为避免这种情况发生需要忽略此信号，这也是下面handle_for_sigpipe函数的作用
  */
 void handle_for_sigpipe();  //处理sigpipe信号
 
-int socket_bind_listen(int port);//socket(),bind(),listen()
+int socket_bind_listen(int port);  // socket(),bind(),listen()
 
 int setSocketNonBlocking(int fd);
 
